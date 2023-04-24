@@ -64,7 +64,7 @@ GameNode* createGame(){
 }*/ // Not sure that we need the function
 
 GameNode* insert_game_at_end(GameNode* head){
-    GameNode *newNode = createGame();
+    GameNode *newNode = createGame();//creating a memory for the new game and storing the game in the memory.
     if(newNode==NULL) return head;
     if(head==NULL){//storing the newly created game at the start
         newNode->next = NULL;
@@ -73,7 +73,7 @@ GameNode* insert_game_at_end(GameNode* head){
     }
     else{//if a game exist
         GameNode *curr = head;
-        
+
         while (curr != NULL)
             curr = curr->next;
         
@@ -91,6 +91,38 @@ void printList(GameNode* head){
         curr = curr->next;
     }
 }
+
+
+
+GameNode* ratingSort(GameNode *head){//TODO check if there is something to add to function, and edge cases(have not checked egde cases).
+    GameNode *curr = head->next;
+    GameNode *insertion = head;
+    GameNode temp;
+
+    if(insertion == NULL || curr == NULL){
+        return;
+    }
+
+    while(curr != NULL){
+        if(curr->rating < insertion->rating){//checking between 2 nodes and swap between them if the right one is smaller
+            temp = *insertion;
+            *insertion = *curr;
+            *curr = temp;
+            curr = insertion->next;
+        }
+        curr = curr->next;
+        insertion = insertion->next;
+
+    }
+    return head;
+    
+}
+
+
+
+
+
+
 
 int main(){
     int operation;
