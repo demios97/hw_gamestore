@@ -45,7 +45,7 @@ GameNode* createGame(){
     }
     strcpy(newNode->title, title);
     newNode->genre = (char *)malloc(strlen(genre) + 1);
-    if(newNode->genre==NULL){
+    if(newNode->genre==NULL){//TODO do we need to also free the memory allocated prev in newndoe->title aswell?
         free(newNode);
         return NULL;
     }
@@ -56,32 +56,36 @@ GameNode* createGame(){
     return newNode;
 }
 
-GameNode* insert_game_at_beginning(GameNode* head){
+/*GameNode* insert_game_at_beginning(GameNode* head){
     GameNode *newNode = createGame();
     if(newNode==NULL) return head;
     newNode->next = head;
     return newNode;
-}
+}*/ // Not sure that we need the function
 
 GameNode* insert_game_at_end(GameNode* head){
     GameNode *newNode = createGame();
     if(newNode==NULL) return head;
-    if(head==NULL){
+    if(head==NULL){//storing the newly created game at the start
         newNode->next = NULL;
         head = newNode;
+        return head;
     }
-    else{
+    else{//if a game exist
         GameNode *curr = head;
-        while (curr->next != NULL) curr = curr->next;
-        curr->next = newNode;
-        newNode->next = NULL;
+        
+        while (curr != NULL)
+            curr = curr->next;
+        
+        newNode->next = NULL; 
+        curr = newNode;
     }
     return head;
 }
 
 void printList(GameNode* head){
     GameNode *curr = head;
-    int i=1;
+    int i = 1;
     while(curr != NULL){
         printf("%d : Title - %s Genre - %s Year - %d Rating - %f\n", i++, curr->title, curr->genre, curr->year, curr->rating);
         curr = curr->next;
@@ -107,7 +111,7 @@ int main(){
     scanf("%d", &operation);
     switch(operation){
         case 1:
-            games.head = insert_game_at_beginning(games.head);
+            //games.head = insert_game_at_beginning(games.head);
             break;
         case 2:
             games.head = insert_game_at_end(games.head);
